@@ -12,11 +12,25 @@ config({ path: envPath })
 console.log('Loaded environment variables from .env.local')
 
 // Dynamic imports after env vars are loaded
-const { default: connectDB } = await import('../src/lib/db/mongoose.js')
+// Import models first to register them with mongoose
 const { default: Category } = await import('../src/domain/models/Category.js')
 const { default: Product } = await import('../src/domain/models/Product.js')
 const { default: AdminUser } = await import('../src/domain/models/AdminUser.js')
 const { default: ContentBlock } = await import('../src/domain/models/ContentBlock.js')
+
+// Connect to MongoDB directly
+const MONGODB_URI = process.env.MONGODB_URI
+if (!MONGODB_URI) {
+  throw new Error('Please define the MONGODB_URI environment variable inside .env.local')
+}
+
+async function connectDB() {
+  const mongoose = (await import('mongoose')).default
+  if (mongoose.connection.readyState === 1) {
+    return mongoose.connection
+  }
+  return await mongoose.connect(MONGODB_URI)
+}
 
 async function seed() {
   try {
