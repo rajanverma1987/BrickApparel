@@ -1,0 +1,44 @@
+# Enforce confirmation-before-coding workflow
+- Always restate your understanding of the requested change.
+- Wait for explicit confirmation before writing code or modifying files.
+
+# Architecture rules
+- Follow clean architecture: UI → services → repositories.
+- No business logic inside components or API routes. Keep all logic in domain services.
+- Use MongoDB + Mongoose with strict schemas.
+- Use server actions where appropriate; prefer server components.
+- Keep components inside src/components and make them reusable.
+- Keep admin panel isolated under /admin with protected routes.
+
+# Code quality
+- Maintain strict typing and input validation.
+- Keep code modular, minimal, and scalable.
+- Avoid unnecessary libraries or complexity.
+- Ensure all operations are secure and production-ready.
+- Use async/await consistently; no callback-style code.
+
+# UI/UX
+- Use Tailwind for styling.
+- All UI must be responsive.
+- Maintain minimal clean design.
+- Optimize images and use lazy loading where appropriate.
+
+# Payments
+- For Stripe and PayPal code, always use server-side intents/orders.
+- Webhooks must be validated, idempotent, and safe.
+
+# Inventory and Orders
+- Inventory must auto-adjust on order events.
+- Keep SKU-level logic inside services.
+- Handle guest checkout smoothly with minimal guest records.
+
+# AI Image Generation
+- Integrate AI image generation only inside admin panel.
+- Keep the generation logic on server; store images in cloud storage.
+
+# Before merging code
+- Provide a short summary of what changed.
+- Confirm compatibility with existing architecture.
+
+- always fix build errors before pushing the code to github.
+- after every Build you do, kill my dev server and start the dev again
